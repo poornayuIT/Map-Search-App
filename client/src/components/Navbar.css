@@ -1,0 +1,113 @@
+/* Navbar Styles */
+
+header {
+    padding: 20px;
+    position: fixed; /* Keep the navbar fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Ensures it's above other elements */
+}
+
+.nav-bar {
+    margin-top: 10px;
+    background-color: rgba(15, 1, 20, 0.753); /* Semi-transparent background for blur to work */
+    backdrop-filter: blur(5px); /* Adds blur effect */
+    -webkit-backdrop-filter: blur(2px); /* For Safari */
+    border-radius: 30px;
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center; /* Aligns logo and text vertically */
+}
+
+.nav-logo .logo {
+    height: 50px;
+    width: 50px; /* Adjust the size of the logo */
+    margin-right: 10px; /* Adds a small space between the logo and text */
+}
+
+.nav-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #b31787cb;
+}
+
+.nav-items {
+    margin-left: auto; /* Pushes the nav items to the right */
+}
+
+.nav-items ul {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-items ul li {
+    list-style: none;
+    position: relative;
+}
+
+.nav-items ul li a {
+    text-decoration: none;
+    color: #a53a79cb;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.nav-items ul li a:hover {
+    background-color: #ff00cc;
+    border-radius: 50px;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown menu styles */
+.dropdown {
+    display: none; /* Initially hidden */
+    position: absolute; /* Positioned relative to its parent */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 10px; /* Space between the parent menu and dropdown */
+    border-radius: 10px; /* Optional for rounded corners */
+    background-color: rgba(24, 5, 30, 0.736); /* Semi-transparent background for blur to work */
+    backdrop-filter: blur(20px); /* Adds blur effect */
+    z-index: 1;
+    flex-direction: column; /* Ensures the items are stacked vertically */
+    width: auto; /* Adjusts width to fit the content */
+    padding: 0; /* Removes any extra padding */
+}
+
+/* Ensure dropdown items are displayed in a block */
+.dropdown li {
+    list-style: none;
+    display: block; /* Makes each item take up the full width */
+    margin: 0; /* Removes any extra margin */
+}
+
+/* Add padding and hover styles to dropdown items */
+.dropdown li a {
+    color: #201325;
+    padding: 5px 10px; /* Minimal padding for better fit */
+    display: block; /* Makes the link take up the full width */
+    text-align: start; /* Aligns text to the left */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown li a:hover {
+    background-color: #ff00cc;
+    border-radius: 10px;
+    color: white;
+}
+
+/* Show dropdown on hover */
+.services:hover .dropdown {
+    display: flex; /* Flexbox layout for vertical stacking */
+}
