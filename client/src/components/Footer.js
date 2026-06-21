@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';  // Make sure to import useEffect
 import '../styles.css'; // Ensure this CSS file exists and is properly linked
 
 const Footer = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [responseMessage, setResponseMessage] = useState('');
 
     // Scroll animation for the footer
     const checkVisibility = () => {
@@ -13,12 +19,41 @@ const Footer = () => {
         }
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+
+        // Send the data to the PHP file using fetch
+        try {
+            const response = await fetch('http://localhost:8000/footer.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+            setResponseMessage(result.message); // Set response message from PHP
+
+        } catch (error) {
+            setResponseMessage("Error submitting form!");
+        }
+    };
+
     useEffect(() => {
         window.addEventListener('scroll', checkVisibility);
         return () => {
             window.removeEventListener('scroll', checkVisibility); // Clean up the event listener
         };
-    }, []);
+    }, []); // Empty dependency array to only run once
 
     return (
         <footer
@@ -29,13 +64,15 @@ const Footer = () => {
                 {/* Contact Us Section */}
                 <div className="contact-us">
                     <h2>Contact Us</h2>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="form-row">
                             <label htmlFor="name">Name:</label>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
                                 placeholder="Your Name"
                             />
                         </div>
@@ -45,6 +82,8 @@ const Footer = () => {
                                 type="email"
                                 id="email"
                                 name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
                                 placeholder="Your Email"
                             />
                         </div>
@@ -53,17 +92,19 @@ const Footer = () => {
                             <textarea
                                 id="message"
                                 name="message"
+                                value={formData.message}
+                                onChange={handleInputChange}
                                 placeholder="Your Message"
                                 rows="3"
                             ></textarea>
                         </div>
                         <button type="submit">Send</button>
                     </form>
+                    <p>{responseMessage}</p>
                 </div>
 
-
                 <div className="social-links">
-                   <span className="title-h2"> <h2>Follow Us</h2></span>
+                    <span className="title-h2"><h2>Follow Us</h2></span>
                     <a href="https://facebook.com" className="social-icon" aria-label="Facebook">
                         <i className="fab fa-facebook-f"></i>
                     </a>
